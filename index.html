@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fire4Biz — Your Business Online for $249</title>
+<meta name="description" content="We build fast, clean websites for local businesses. One price. No monthly fees. Your business online in 72 hours.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --black: #0c0c0c;
+    --white: #f8f6f1;
+    --orange: #ff4500;
+    --orange-light: rgba(255,69,0,0.08);
+    --gray: #888;
+    --light-gray: #f0ede6;
+    --border: rgba(12,12,12,0.1);
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body: 'Manrope', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--white); color: var(--black); overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 6%; background: rgba(248,246,241,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+  .logo { font-family: var(--font-display); font-size: 1.6rem; letter-spacing: 0.05em; color: var(--black); text-decoration: none; }
+  .logo span { color: var(--orange); }
+  .nav-right { display: flex; align-items: center; gap: 2rem; }
+  .nav-link { font-size: 0.8rem; font-weight: 500; color: var(--gray); text-decoration: none; letter-spacing: 0.04em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-link:hover { color: var(--black); }
+  .nav-btn { background: var(--orange); color: var(--white); padding: 0.6rem 1.4rem; font-family: var(--font-body); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; transition: background 0.2s, transform 0.15s; display: inline-block; }
+  .nav-btn:hover { background: #cc3700; transform: translateY(-1px); }
+
+  /* HERO */
+  #hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding-top: 5rem; overflow: hidden; }
+  .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 6rem 4rem 6rem 6%; position: relative; }
+  .hero-eyebrow { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem; opacity: 0; animation: fadeUp 0.6s ease forwards 0.2s; }
+  .eyebrow-line { width: 32px; height: 1px; background: var(--orange); }
+  .eyebrow-text { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange); }
+  .hero-title { font-family: var(--font-display); font-size: clamp(4rem, 7vw, 7rem); line-height: 0.95; letter-spacing: 0.02em; color: var(--black); margin-bottom: 2rem; opacity: 0; animation: fadeUp 0.6s ease forwards 0.4s; }
+  .hero-title .accent { color: var(--orange); }
+  .hero-sub { font-size: 1.05rem; font-weight: 300; line-height: 1.75; color: #555; max-width: 420px; margin-bottom: 3rem; opacity: 0; animation: fadeUp 0.6s ease forwards 0.6s; }
+  .hero-cta-group { display: flex; align-items: center; gap: 1.5rem; opacity: 0; animation: fadeUp 0.6s ease forwards 0.8s; }
+  .btn-main { background: var(--black); color: var(--white); padding: 1rem 2.5rem; font-family: var(--font-body); font-size: 0.85rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; transition: background 0.2s, transform 0.15s; display: inline-block; }
+  .btn-main:hover { background: #222; transform: translateY(-2px); }
+  .btn-ghost { font-size: 0.85rem; font-weight: 500; color: var(--gray); text-decoration: none; transition: color 0.2s; }
+  .btn-ghost:hover { color: var(--black); }
+  .hero-right { background: var(--black); display: flex; align-items: center; justify-content: center; padding: 6rem 4rem; position: relative; overflow: hidden; }
+  .hero-right::before { content: ''; position: absolute; top: -30%; right: -20%; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(255,69,0,0.15) 0%, transparent 70%); pointer-events: none; }
+  .price-card { text-align: center; position: relative; z-index: 2; opacity: 0; animation: fadeUp 0.8s ease forwards 0.6s; }
+  .price-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--orange); margin-bottom: 1.5rem; display: block; }
+  .price-amount { font-family: var(--font-display); font-size: clamp(5rem, 10vw, 9rem); line-height: 1; color: var(--white); letter-spacing: 0.02em; display: block; margin-bottom: 0.5rem; }
+  .price-note { font-size: 0.8rem; color: rgba(248,246,241,0.4); font-weight: 300; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 3rem; display: block; }
+  .price-features { list-style: none; text-align: left; display: inline-block; }
+  .price-features li { font-size: 0.85rem; color: rgba(248,246,241,0.7); font-weight: 300; padding: 0.4rem 0; display: flex; align-items: center; gap: 0.75rem; }
+  .price-features li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--orange); flex-shrink: 0; }
+
+  /* MARQUEE */
+  .marquee-wrap { background: var(--orange); padding: 0.875rem 0; overflow: hidden; white-space: nowrap; }
+  .marquee-track { display: inline-flex; animation: marquee 22s linear infinite; }
+  .marquee-item { font-family: var(--font-display); font-size: 1rem; letter-spacing: 0.1em; color: var(--white); padding: 0 2.5rem; }
+  .marquee-dot { color: rgba(255,255,255,0.5); }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* HOW IT WORKS */
+  #how { padding: 8rem 6%; max-width: 1300px; margin: 0 auto; }
+  .section-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 5rem; gap: 2rem; }
+  .section-eyebrow { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+  .section-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--orange); }
+  .section-title { font-family: var(--font-display); font-size: clamp(2.5rem, 4vw, 4rem); line-height: 1; letter-spacing: 0.02em; color: var(--black); }
+  .section-desc { font-size: 0.95rem; font-weight: 300; color: var(--gray); line-height: 1.8; max-width: 320px; text-align: right; }
+  .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border); }
+  .step-card { background: var(--white); padding: 3rem 2.5rem; position: relative; overflow: hidden; opacity: 0; transform: translateY(30px); transition: opacity 0.5s ease, transform 0.5s ease, background 0.3s; }
+  .step-card.visible { opacity: 1; transform: translateY(0); }
+  .step-card:hover { background: var(--light-gray); }
+  .step-num { font-family: var(--font-display); font-size: 5rem; line-height: 1; color: rgba(12,12,12,0.06); position: absolute; top: 1.5rem; right: 1.5rem; letter-spacing: 0.02em; }
+  .step-icon { font-size: 2rem; margin-bottom: 1.5rem; display: block; }
+  .step-title { font-family: var(--font-display); font-size: 1.6rem; letter-spacing: 0.03em; color: var(--black); margin-bottom: 0.75rem; }
+  .step-desc { font-size: 0.875rem; font-weight: 300; color: #666; line-height: 1.75; }
+
+  /* WHY US */
+  #why { background: var(--black); padding: 8rem 6%; }
+  .why-inner { max-width: 1300px; margin: 0 auto; }
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; margin-top: 5rem; }
+  .why-left .big-stat { font-family: var(--font-display); font-size: clamp(4rem, 8vw, 8rem); line-height: 1; color: var(--white); letter-spacing: 0.02em; margin-bottom: 1rem; }
+  .why-left .big-stat span { color: var(--orange); }
+  .why-left p { font-size: 1rem; font-weight: 300; color: rgba(248,246,241,0.5); line-height: 1.8; max-width: 380px; }
+  .why-right { display: flex; flex-direction: column; gap: 0; border-top: 1px solid rgba(248,246,241,0.08); }
+  .why-item { padding: 1.75rem 0; border-bottom: 1px solid rgba(248,246,241,0.08); display: flex; align-items: flex-start; gap: 1.25rem; opacity: 0; transform: translateX(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .why-item.visible { opacity: 1; transform: translateX(0); }
+  .why-icon { width: 36px; height: 36px; background: var(--orange-light); border: 1px solid rgba(255,69,0,0.2); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
+  .why-title { font-size: 0.95rem; font-weight: 600; color: var(--white); margin-bottom: 0.3rem; }
+  .why-desc { font-size: 0.825rem; font-weight: 300; color: rgba(248,246,241,0.45); line-height: 1.7; }
+
+  /* LAYOUTS */
+  #layouts { padding: 8rem 6%; max-width: 1300px; margin: 0 auto; }
+  .layouts-intro { max-width: 600px; margin-bottom: 4rem; }
+  .layouts-intro p { font-size: 1rem; font-weight: 300; color: var(--gray); line-height: 1.8; margin-top: 1rem; }
+  .layouts-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  .layout-card { aspect-ratio: 3/4; background: var(--light-gray); border: 1px solid var(--border); position: relative; overflow: hidden; cursor: pointer; opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s; }
+  .layout-card.visible { opacity: 1; transform: translateY(0); }
+  .layout-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); }
+  .layout-preview { width: 100%; height: 100%; padding: 1rem; }
+  .lp-bar { height: 6px; border-radius: 2px; background: var(--black); margin-bottom: 0.5rem; opacity: 0.15; }
+  .lp-bar.orange { background: var(--orange); opacity: 0.7; }
+  .lp-bar.short { width: 60%; }
+  .lp-bar.shorter { width: 40%; }
+  .lp-block { height: 60px; background: var(--black); opacity: 0.05; margin-bottom: 0.5rem; border-radius: 2px; }
+  .lp-block.orange { background: var(--orange); opacity: 0.15; height: 30px; }
+  .lp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; margin-bottom: 0.5rem; }
+  .lp-cell { height: 35px; background: var(--black); opacity: 0.05; border-radius: 2px; }
+  .layout-label { position: absolute; bottom: 0; left: 0; right: 0; background: var(--black); color: var(--white); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.6rem 1rem; transform: translateY(100%); transition: transform 0.25s ease; }
+  .layout-card:hover .layout-label { transform: translateY(0); }
+
+  /* PRICING */
+  #pricing { background: var(--light-gray); padding: 8rem 6%; }
+  .pricing-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+  .pricing-inner .section-eyebrow { justify-content: center; }
+  .pricing-inner .section-eyebrow::before { display: none; }
+  .price-block { margin: 4rem 0; }
+  .price-main { font-family: var(--font-display); font-size: clamp(6rem, 14vw, 12rem); line-height: 1; color: var(--black); letter-spacing: 0.02em; display: block; }
+  .price-main span { color: var(--orange); }
+  .price-tagline { font-size: 1.1rem; font-weight: 300; color: var(--gray); margin: 1rem 0 3rem; line-height: 1.7; }
+  .includes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; background: var(--border); margin-bottom: 3rem; text-align: left; }
+  .include-item { background: var(--white); padding: 1.5rem; display: flex; align-items: flex-start; gap: 0.75rem; }
+  .include-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); margin-top: 6px; flex-shrink: 0; }
+  .include-text { font-size: 0.85rem; font-weight: 400; color: var(--black); line-height: 1.5; }
+  .include-text small { display: block; font-size: 0.75rem; color: var(--gray); font-weight: 300; margin-top: 0.2rem; }
+  .cta-big { background: var(--black); color: var(--white); padding: 1.25rem 4rem; font-family: var(--font-body); font-size: 0.9rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; display: inline-block; transition: background 0.2s, transform 0.15s; }
+  .cta-big:hover { background: var(--orange); transform: translateY(-2px); }
+
+  /* CONTACT */
+  #contact { padding: 8rem 6%; max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+  .contact-left .section-title { margin-bottom: 1.5rem; }
+  .contact-left p { font-size: 0.95rem; font-weight: 300; color: var(--gray); line-height: 1.8; margin-bottom: 2rem; }
+  .contact-detail { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+  .contact-detail span { font-size: 0.875rem; color: var(--black); font-weight: 400; }
+  .contact-detail a { font-size: 0.875rem; color: var(--orange); font-weight: 500; text-decoration: none; }
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-field label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray); }
+  .form-field input, .form-field textarea, .form-field select { background: var(--light-gray); border: 1px solid var(--border); padding: 0.875rem 1rem; font-family: var(--font-body); font-size: 0.875rem; color: var(--black); outline: none; transition: border-color 0.2s; width: 100%; appearance: none; }
+  .form-field input:focus, .form-field textarea:focus, .form-field select:focus { border-color: var(--orange); }
+  .form-field textarea { resize: vertical; min-height: 120px; }
+  .form-submit { background: var(--orange); color: var(--white); border: none; padding: 1rem 2rem; font-family: var(--font-body); font-size: 0.85rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; transition: background 0.2s, transform 0.15s; align-self: flex-start; }
+  .form-submit:hover { background: #cc3700; transform: translateY(-1px); }
+
+  /* FOOTER */
+  footer { background: var(--black); padding: 3rem 6%; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.05); }
+  .footer-logo { font-family: var(--font-display); font-size: 1.4rem; letter-spacing: 0.05em; color: var(--white); text-decoration: none; }
+  .footer-logo span { color: var(--orange); }
+  .footer-copy { font-size: 0.75rem; color: rgba(248,246,241,0.3); font-weight: 300; }
+  .footer-email { font-size: 0.8rem; color: rgba(248,246,241,0.5); text-decoration: none; transition: color 0.2s; }
+  .footer-email:hover { color: var(--orange); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 768px) {
+    #hero { grid-template-columns: 1fr; }
+    .hero-right { padding: 4rem 6%; min-height: 50vh; }
+    .hero-left { padding: 6rem 6% 3rem; }
+    .steps-grid { grid-template-columns: 1fr; }
+    .why-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .layouts-grid { grid-template-columns: repeat(2, 1fr); }
+    .includes-grid { grid-template-columns: 1fr; }
+    #contact { grid-template-columns: 1fr; gap: 3rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .section-header { flex-direction: column; align-items: flex-start; }
+    .section-desc { text-align: left; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+    .nav-right .nav-link { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">FIRE<span>4</span>BIZ</a>
+  <div class="nav-right">
+    <a href="#how" class="nav-link">How it works</a>
+    <a href="#layouts" class="nav-link">Layouts</a>
+    <a href="#pricing" class="nav-link">Pricing</a>
+    <a href="#contact" class="nav-btn">Get Started</a>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <div class="eyebrow-line"></div>
+      <span class="eyebrow-text">Websites for local businesses</span>
+    </div>
+    <h1 class="hero-title">YOUR<br>BUSINESS<br><span class="accent">ONLINE.</span><br>DONE.</h1>
+    <p class="hero-sub">We build fast, clean websites for local businesses across the US. Pick a layout you love, share your details, and we handle everything else.</p>
+    <div class="hero-cta-group">
+      <a href="#contact" class="btn-main">Get your site →</a>
+      <a href="#how" class="btn-ghost">See how it works ↓</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="price-card">
+      <span class="price-label">One flat price. No surprises.</span>
+      <span class="price-amount">$249</span>
+      <span class="price-note">One time · No monthly fees</span>
+      <ul class="price-features">
+        <li>Professional multi-page website</li>
+        <li>Your choice of layout &amp; style</li>
+        <li>Mobile-friendly on every device</li>
+        <li>Loads fast — under 2 seconds</li>
+        <li>Contact form included</li>
+        <li>Delivered in 72 hours</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Fast delivery <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">No monthly fees <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Your layout your style <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Mobile friendly <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Loads in under 2 seconds <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">$249 flat <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">72 hour turnaround <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Built for local businesses <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Fast delivery <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">No monthly fees <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Your layout your style <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Mobile friendly <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Loads in under 2 seconds <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">$249 flat <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">72 hour turnaround <span class="marquee-dot">✦</span></span>
+    <span class="marquee-item">Built for local businesses <span class="marquee-dot">✦</span></span>
+  </div>
+</div>
+
+<section id="how">
+  <div class="section-header">
+    <div>
+      <div class="section-eyebrow">The process</div>
+      <h2 class="section-title">THREE STEPS.<br>THAT'S IT.</h2>
+    </div>
+    <p class="section-desc">No back-and-forth. No technical jargon. Just tell us what you need and we build it.</p>
+  </div>
+  <div class="steps-grid">
+    <div class="step-card">
+      <span class="step-num">01</span>
+      <span class="step-icon">✉️</span>
+      <div class="step-title">REACH OUT</div>
+      <p class="step-desc">Send us a message with your business name, what you do, and any website style you like. That's all we need to get started.</p>
+    </div>
+    <div class="step-card">
+      <span class="step-num">02</span>
+      <span class="step-icon">⚡</span>
+      <div class="step-title">WE BUILD</div>
+      <p class="step-desc">We get to work on your site within 24 hours. Clean, fast, and built to look great on phones and desktops. No technical headaches on your end.</p>
+    </div>
+    <div class="step-card">
+      <span class="step-num">03</span>
+      <span class="step-icon">🚀</span>
+      <div class="step-title">YOU'RE LIVE</div>
+      <p class="step-desc">Your site goes live within 72 hours. Your business is now findable online, looking professional, and open 24/7 to new customers.</p>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="why-inner">
+    <div class="section-eyebrow" style="color:var(--orange);">Why fire4biz</div>
+    <h2 class="section-title" style="color:var(--white);margin-top:0.5rem;">BUILT FOR<br>BUSINESSES<br><span style="color:var(--orange)">LIKE YOURS.</span></h2>
+    <div class="why-grid">
+      <div class="why-left">
+        <div class="big-stat"><span>10M+</span></div>
+        <p>US small businesses still don't have a website. Every day without one means customers choosing your competitor instead of you.</p>
+      </div>
+      <div class="why-right">
+        <div class="why-item">
+          <div class="why-icon">⚡</div>
+          <div>
+            <div class="why-title">Loads in under 2 seconds</div>
+            <div class="why-desc">No bloated page builders. No slow plugins. Just clean code that flies on any connection.</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">🎨</div>
+          <div>
+            <div class="why-title">Dozens of layouts to choose from</div>
+            <div class="why-desc">Pick a style you love — or send us a site you admire and we'll build yours in that style.</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">📱</div>
+          <div>
+            <div class="why-title">Perfect on every device</div>
+            <div class="why-desc">Over 60% of local searches happen on mobile. Your site looks sharp everywhere automatically.</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">💰</div>
+          <div>
+            <div class="why-title">No monthly fees. Ever.</div>
+            <div class="why-desc">Pay once and you're done. No subscriptions, no hosting bills, no surprise charges.</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">🕐</div>
+          <div>
+            <div class="why-title">72 hour turnaround</div>
+            <div class="why-desc">Most designers take weeks. We deliver in 72 hours because your business shouldn't wait.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="layouts">
+  <div class="layouts-intro">
+    <div class="section-eyebrow">Styles &amp; layouts</div>
+    <h2 class="section-title">YOUR STYLE.<br>YOUR SITE.</h2>
+    <p>Pick from dozens of clean layouts or show us a site you love. We build yours to match — your business name, your services, your look.</p>
+  </div>
+  <div class="layouts-grid">
+    <div class="layout-card">
+      <div class="layout-preview">
+        <div class="lp-bar orange"></div>
+        <div class="lp-bar short"></div>
+        <div class="lp-block" style="height:80px;"></div>
+        <div class="lp-bar shorter"></div>
+        <div class="lp-bar"></div>
+        <div class="lp-bar short"></div>
+        <div class="lp-block orange"></div>
+      </div>
+      <div class="layout-label">Bold &amp; Modern</div>
+    </div>
+    <div class="layout-card">
+      <div class="layout-preview">
+        <div class="lp-bar"></div>
+        <div class="lp-block" style="height:100px;opacity:0.04;"></div>
+        <div class="lp-grid">
+          <div class="lp-cell"></div>
+          <div class="lp-cell"></div>
+        </div>
+        <div class="lp-bar short"></div>
+        <div class="lp-bar shorter"></div>
+        <div class="lp-block orange"></div>
+      </div>
+      <div class="layout-label">Clean &amp; Minimal</div>
+    </div>
+    <div class="layout-card">
+      <div class="layout-preview">
+        <div style="height:90px;background:var(--black);opacity:0.08;margin-bottom:0.5rem;border-radius:2px;"></div>
+        <div class="lp-bar orange short"></div>
+        <div class="lp-bar shorter"></div>
+        <div class="lp-grid">
+          <div class="lp-cell"></div>
+          <div class="lp-cell"></div>
+          <div class="lp-cell"></div>
+          <div class="lp-cell"></div>
+        </div>
+        <div class="lp-bar short"></div>
+      </div>
+      <div class="layout-label">Professional</div>
+    </div>
+    <div class="layout-card">
+      <div class="layout-preview">
+        <div class="lp-bar orange"></div>
+        <div class="lp-bar"></div>
+        <div style="display:grid;grid-template-columns:1fr 2fr;gap:0.4rem;margin-bottom:0.5rem;">
+          <div style="height:120px;background:var(--black);opacity:0.06;border-radius:2px;"></div>
+          <div style="display:flex;flex-direction:column;gap:0.4rem;">
+            <div class="lp-bar short" style="margin:0"></div>
+            <div class="lp-bar shorter" style="margin:0"></div>
+            <div class="lp-block orange" style="margin:0;height:20px;"></div>
+          </div>
+        </div>
+        <div class="lp-bar shorter"></div>
+      </div>
+      <div class="layout-label">Classic &amp; Warm</div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="pricing-inner">
+    <div class="section-eyebrow">Pricing</div>
+    <h2 class="section-title">ONE WEBSITE.<br>ONE PRICE.</h2>
+    <div class="price-block">
+      <span class="price-main"><span>$</span>249</span>
+      <p class="price-tagline">One time payment. No monthly fees. No hidden costs.<br>Your business online in 72 hours.</p>
+    </div>
+    <div class="includes-grid">
+      <div class="include-item">
+        <div class="include-dot"></div>
+        <div class="include-text">Multi-page website<small>Home, About, Services, Contact</small></div>
+      </div>
+      <div class="include-item">
+        <div class="include-dot"></div>
+        <div class="include-text">Your choice of layout<small>Dozens of styles available</small></div>
+      </div>
+      <div class="include-item">
+        <div class="include-dot"></div>
+        <div class="include-text">Mobile responsive<small>Looks great on all devices</small></div>
+      </div>
+      <div class="include-item">
+        <div class="include-dot"></div>
+        <div class="include-text">Fast loading<small>Under 2 seconds guaranteed</small></div>
+      </div>
+      <div class="include-item">
+        <div class="include-dot"></div>
+        <div class="include-text">Contact form<small>Customers can reach you directly</small></div>
+      </div>
+      <div class="include-item">
+        <div class="include-dot"></div>
+        <div class="include-text">72 hour delivery<small>From payment to live site</small></div>
+      </div>
+    </div>
+    <a href="#contact" class="cta-big">Get your site for $249 →</a>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-left">
+    <div class="section-eyebrow">Get in touch</div>
+    <h2 class="section-title">LET'S GET<br>YOU ONLINE.</h2>
+    <p>Tell us about your business and we'll get back to you within a few hours. No obligation, no pressure — just a conversation.</p>
+    <div class="contact-detail">
+      <span>✉</span>
+      <a href="mailto:hello@fire4biz.com">hello@fire4biz.com</a>
+    </div>
+    <div class="contact-detail">
+      <span>⏱</span>
+      <span>We reply within a few hours</span>
+    </div>
+  </div>
+  <div class="contact-right">
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-field">
+          <label>Your name</label>
+          <input type="text" placeholder="John Smith" required>
+        </div>
+        <div class="form-field">
+          <label>Business name</label>
+          <input type="text" placeholder="Smith's Plumbing" required>
+        </div>
+      </div>
+      <div class="form-field">
+        <label>Email address</label>
+        <input type="email" placeholder="john@smithsplumbing.com" required>
+      </div>
+      <div class="form-field">
+        <label>What does your business do?</label>
+        <select>
+          <option value="">Select your industry</option>
+          <option>Cleaning Services</option>
+          <option>Landscaping / Lawn Care</option>
+          <option>Plumbing / HVAC</option>
+          <option>Auto Repair / Detailing</option>
+          <option>Pest Control</option>
+          <option>Painting / Handyman</option>
+          <option>Restaurant / Cafe</option>
+          <option>Salon / Spa</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>Anything else? (optional)</label>
+        <textarea placeholder="Any website style you like, specific pages you need, or questions you have..."></textarea>
+      </div>
+      <button type="submit" class="form-submit">Send message →</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <a href="#" class="footer-logo">FIRE<span>4</span>BIZ</a>
+  <span class="footer-copy">© 2025 Fire4Biz. All rights reserved.</span>
+  <a href="mailto:hello@fire4biz.com" class="footer-email">hello@fire4biz.com</a>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), entry.target.dataset.delay || 0);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.step-card, .why-item, .layout-card').forEach((el, i) => {
+    el.dataset.delay = i * 100;
+    observer.observe(el);
+  });
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-submit');
+    btn.textContent = 'Message sent! ✓';
+    btn.style.background = '#1a1a1a';
+    setTimeout(() => { btn.textContent = 'Send message →'; btn.style.background = ''; e.target.reset(); }, 3000);
+  }
+
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    document.querySelectorAll('section[id]').forEach(section => {
+      const top = section.offsetTop - 100;
+      const link = document.querySelector(`.nav-link[href="#${section.id}"]`);
+      if (link) link.style.color = (scrollY >= top && scrollY < top + section.offsetHeight) ? 'var(--black)' : '';
+    });
+  });
+</script>
+</body>
+</html>
